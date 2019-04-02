@@ -276,6 +276,8 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
         }
     }
     else {
+        _openSideForStatusBarStyle = MMDrawerSideNone;
+        
         [self setAnimatingDrawer:animated];
         CGRect newFrame = self.childControllerContainerView.bounds;
         
