@@ -127,6 +127,7 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
 }
 
 @property (nonatomic, assign, readwrite) MMDrawerSide openSide;
+@property (nonatomic, assign) MMDrawerSide openSideForStatusBarStyle;
 
 @property (nonatomic, strong) UIView * childControllerContainerView;
 @property (nonatomic, strong) MMDrawerCenterContainerView * centerContainerView;
@@ -916,6 +917,7 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
 -(void)setOpenSide:(MMDrawerSide)openSide{
     if(_openSide != openSide){
         _openSide = openSide;
+        _openSideForStatusBarStyle = openSide;
         [self.centerContainerView setOpenSide:openSide];
         if(openSide == MMDrawerSideNone){
             [self.leftDrawerViewController.view setHidden:YES];
@@ -1127,11 +1129,11 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
 
 #pragma mark - iOS 7 Status Bar Helpers
 -(UIViewController*)childViewControllerForStatusBarStyle{
-    return [self childViewControllerForSide:self.openSide];
+    return [self childViewControllerForSide:self.openSideForStatusBarStyle];
 }
 
 -(UIViewController*)childViewControllerForStatusBarHidden{
-    return [self childViewControllerForSide:self.openSide];
+    return [self childViewControllerForSide:self.openSideForStatusBarStyle];
 }
 
 -(void)setNeedsStatusBarAppearanceUpdateIfSupported{
@@ -1287,6 +1289,7 @@ static inline CGFloat originXForDrawerOriginAndTargetOriginOffset(CGFloat origin
     else if(drawer == MMDrawerSideRight){
         drawerToHide = MMDrawerSideLeft;
     }
+    _openSideForStatusBarStyle = drawer;
     
     UIViewController * sideDrawerViewControllerToPresent = [self sideDrawerViewControllerForSide:drawer];
     UIViewController * sideDrawerViewControllerToHide = [self sideDrawerViewControllerForSide:drawerToHide];
