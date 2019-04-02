@@ -361,6 +361,8 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
             CGFloat distance = ABS(CGRectGetMinX(oldFrame)-newFrame.origin.x);
             NSTimeInterval duration = MAX(distance/ABS(velocity),MMDrawerMinimumAnimationDuration);
             
+            _openSideForStatusBarStyle = drawerSide;
+            
             [UIView
              animateWithDuration:(animated?duration:0.0)
              delay:0.0
@@ -1289,7 +1291,6 @@ static inline CGFloat originXForDrawerOriginAndTargetOriginOffset(CGFloat origin
     else if(drawer == MMDrawerSideRight){
         drawerToHide = MMDrawerSideLeft;
     }
-    _openSideForStatusBarStyle = drawer;
     
     UIViewController * sideDrawerViewControllerToPresent = [self sideDrawerViewControllerForSide:drawer];
     UIViewController * sideDrawerViewControllerToHide = [self sideDrawerViewControllerForSide:drawerToHide];
